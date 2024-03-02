@@ -1,0 +1,25 @@
+{
+	"name": "php-laravel-railroad",
+	"dockerComposeFile": [
+		"compose.yml"
+	],
+	"service": "php-laravel",
+	"remoteUser": "vscode",
+	"remoteEnv": {
+		"APP_NAME": "railroad",
+		"APP_ENV": "local",
+		"APP_KEY": "base64:GsSOvZ2uoodgjc1l4XfOWdWs+pMRw34I8mfkCZFEwps=",
+		"APP_DEBUG": "true",
+		"APP_URL": "http://localhost"
+	},
+	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+				"editorconfig.editorconfig",
+				"redhat.vscode-yaml"
+			]
+		}
+	}
+}
