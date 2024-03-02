@@ -3,11 +3,6 @@ version: '3'
 services:
   php-laravel:
     build: ./services/php-laravel
-    environment:
-      DB_PASSWORD: laravel
-      DB_PASSWORD_TESTING: laravel
-      DB_HOST: postgres
-      DB_HOST_TESTING: postgres
     tty: true
     volumes:
       - ../:/workspace:cached

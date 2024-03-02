@@ -10,11 +10,23 @@
 		"APP_ENV": "local",
 		"APP_KEY": "base64:GsSOvZ2uoodgjc1l4XfOWdWs+pMRw34I8mfkCZFEwps=",
 		"APP_DEBUG": "true",
-		"APP_URL": "http://localhost"
+		"DB_HOST": "postgres",
+		"DB_PORT": "5432",
+		"DB_DATABASE": "railroad_local",
+		"DB_DATABASE_TESTING": "railroad_testing"
 	},
 	"workspaceFolder": "/workspace",
 	"customizations": {
+		
 		"vscode": {
+			"settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
 			"extensions": [
 				"bmewburn.vscode-intelephense-client",
 				"editorconfig.editorconfig",
