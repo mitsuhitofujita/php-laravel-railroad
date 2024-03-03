@@ -30,7 +30,8 @@
 			"extensions": [
 				"bmewburn.vscode-intelephense-client",
 				"editorconfig.editorconfig",
-				"redhat.vscode-yaml"
+				"redhat.vscode-yaml",
+				"shufo.vscode-blade-formatter"
 			]
 		}
 	}
