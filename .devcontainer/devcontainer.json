@@ -1,5 +1,5 @@
 {
-	"name": "php-laravel-railway",
+	"name": "php-laravel-railway-app-example",
 	"dockerComposeFile": [
 		"compose.yml"
 	],

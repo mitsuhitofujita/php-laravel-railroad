@@ -1,1 +1,1 @@
-# php-laravel-railway
+# php-laravel-railway-app-example
