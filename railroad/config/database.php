@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'railroad'),
+    'default' => env('DB_CONNECTION', 'railway'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
 
     'connections' => [
 
-        'railroad' => [
+        'railway' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST'),
             'port' => env('DB_PORT'),
