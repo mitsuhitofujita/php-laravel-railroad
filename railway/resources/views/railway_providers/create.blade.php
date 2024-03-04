@@ -1,11 +1,21 @@
 <h2>railway create</h2>
 <div>
-    {{ html()->form('POST', '/railway_providers/store')->open() }}
-        {{ html()->label('鉄道会社名')->for('railway-providers-store-name') }}
-        {{ html()->text('name')->id('railway-providers-store-name') }}
-        @error('name')
-            <li>{{$message}}</li>
-        @enderror
-        {{ html()->submit('新規追加') }}
+    {{ html()->modelForm($initialParams, 'POST', '/railway_providers/store')->open() }}
+        <div>
+            {{ html()->label('鉄道会社名')->for('railway-providers-create-name') }}
+            {{ html()->text('name')->id('railway-providers-create-name') }}
+            @error('name')
+                {{ html()->span($message) }}
+            @enderror
+        </div>
+        <div>
+            {{ html()->hidden('token')->id('railway-providers-create-token') }}
+            @error('token')
+                {{ html()->span($message) }}
+            @enderror
+        </div>
+        <div>
+            {{ html()->submit('新規追加') }}
+        </div>
     {{ html()->form()->close() }}
 </div>

@@ -30,6 +30,12 @@ class StoreRailwayProviderRequest extends FormRequest
     {
         return [
             'name.required' => '鉄道会社名を入力してください',
+            'name.max' => '鉄道会社名が長すぎです',
         ];
+    }
+
+    protected function passedValidation(): void
+    {
+        $this->merge(['action' => 'create']);
     }
 }
