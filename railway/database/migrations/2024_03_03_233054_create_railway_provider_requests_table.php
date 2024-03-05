@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('railway_provider_requests', function (Blueprint $table) {
             $table->id();
-            $table->text('action');
             $table->text('token')->unique();
+            $table->uuid('resource_uuid')->unique();
+            $table->text('action');
+            $table->foreignId('railway_provider_id')->nullable();
             $table->text('name');
             $table->timestamp('created_at')->useCurrent();
         });

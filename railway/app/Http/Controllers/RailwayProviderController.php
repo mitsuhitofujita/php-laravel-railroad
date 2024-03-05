@@ -24,7 +24,7 @@ class RailwayProviderController extends Controller
     public function store(StoreRailwayProviderRequest $request)
     {
         $railwayProviderRequest = (new RailwayProviderRequest())->fill($request->all());
-        if ($railwayProviderRequest->hasUniqueToken()) {
+        if ($railwayProviderRequest->existsUniqueToken()) {
             throw ValidationException::withMessages([
                 'token' => [ 'このトークン使用済みです。フォームを再読み込みし、入力し直してください。' ],
             ]);

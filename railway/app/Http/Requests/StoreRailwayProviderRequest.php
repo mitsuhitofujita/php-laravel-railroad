@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreRailwayProviderRequest extends FormRequest
 {
@@ -36,6 +37,6 @@ class StoreRailwayProviderRequest extends FormRequest
 
     protected function passedValidation(): void
     {
-        $this->merge(['action' => 'create']);
+        $this->merge(['action' => 'create', 'resource_uuid' => Str::uuid()]);
     }
 }

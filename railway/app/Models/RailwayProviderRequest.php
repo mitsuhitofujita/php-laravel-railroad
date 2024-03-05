@@ -15,16 +15,19 @@ class RailwayProviderRequest extends Model
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'action',
         'token',
+        'action',
+        'resource_uuid',
+        'railway_provider_id',
         'name',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
+        'railway_provider_id' => 'integer',
     ];
 
-    public function hasUniqueToken(): bool
+    public function existsUniqueToken(): bool
     {
         return self::query()
             ->where('token', '=', $this->token)
