@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\RailwayProviderRequest;
+use App\Models\StoreRailwayProviderRequest;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,16 +11,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RailwayProviderRequestCreated
+class StoreRailwayProviderRequestCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public RailwayProviderRequest $railwayProviderRequest)
+    public function __construct(public StoreRailwayProviderRequest $storeRailwayProviderRequest)
     {
-        //
     }
 
     /**

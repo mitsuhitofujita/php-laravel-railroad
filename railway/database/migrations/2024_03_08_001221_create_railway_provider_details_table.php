@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('railway_provider_requests', function (Blueprint $table) {
+        Schema::create('railway_provider_details', function (Blueprint $table) {
             $table->id();
-            $table->text('token')->unique();
-            $table->uuid('resource_uuid')->unique();
-            $table->text('action');
-            $table->foreignId('railway_provider_id')->nullable();
+            $table->foreignId('railway_provider_id');
             $table->text('name');
             $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('railway_provider_id')->references('id')->on('railway_providers');
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('railway_provider_requests');
+        Schema::dropIfExists('railway_provider_details');
     }
 };

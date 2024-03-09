@@ -2,42 +2,40 @@
 
 namespace App\Models;
 
-use App\Events\RailwayProviderRequestCreated;
+use App\Events\StoreRailwayProviderRequestCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class RailwayProviderRequest extends Model
+class StoreRailwayProviderRequest extends Model
 {
     use HasFactory;
     use Notifiable;
 
-    protected $table = 'railway_provider_requests';
+    protected $table = 'store_railway_provider_requests';
 
     const UPDATED_AT = null;
 
     protected $fillable = [
         'token',
-        'action',
-        'resource_uuid',
-        'railway_provider_id',
+        'railway_provider_event_stream_id',
         'name',
     ];
 
     protected $casts = [
+        'railway_provider_event_stream_id' => 'integer',
         'created_at' => 'datetime',
-        'railway_provider_id' => 'integer',
     ];
 
     protected $dispatchesEvents = [
-        'created' => RailwayProviderRequestCreated::class,
+        'created' => StoreRailwayProviderRequestCreated::class,
     ];
 
-    public function existsUniqueToken(): bool
+    public static function existsToken(string $token): bool
     {
         return self::query()
-            ->where('token', '=', $this->token)
+            ->where('token', '=', $token)
             ->exists();
     }
 }

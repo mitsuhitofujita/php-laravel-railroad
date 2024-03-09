@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRailwayProviderRequest;
-use App\Models\RailwayProviderRequest;
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreRailwayProviderRequest as StoreRequest;
+use App\Models\RailwayProviderEventStream as EventStream;
+use App\Models\StoreRailwayProviderRequest as StoreModel;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-
 
 class RailwayProviderController extends Controller
 {
@@ -23,15 +22,23 @@ class RailwayProviderController extends Controller
         ]]);
     }
 
-    public function store(StoreRailwayProviderRequest $request)
+    public function store(StoreRequest $request)
     {
-        $railwayProviderRequest = (new RailwayProviderRequest())->fill($request->all());
-        if ($railwayProviderRequest->existsUniqueToken()) {
+        if (StoreModel::existsToken($request->input('token'))) {
             throw ValidationException::withMessages([
-                'token' => [ 'このトークン使用済みです。フォームを再読み込みし、入力し直してください。' ],
+                'token' => ['このトークン使用済みです。フォームを再読み込みし、入力し直してください。'],
             ]);
         }
-        $railwayProviderRequest->save();
+
+        $eventStream = new EventStream();
+        $eventStream->save();
+
+        (new StoreModel())->fill(
+            array_merge(
+                $request->all(),
+                ['railway_provider_event_stream_id' => $eventStream['id']],
+            )
+        )->save();
         return view('railway_providers.index');
     }
 }

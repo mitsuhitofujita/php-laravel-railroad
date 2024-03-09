@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class StoreRailwayProviderRequest extends FormRequest
 {
@@ -33,10 +32,5 @@ class StoreRailwayProviderRequest extends FormRequest
             'name.required' => '鉄道会社名を入力してください',
             'name.max' => '鉄道会社名が長すぎです',
         ];
-    }
-
-    protected function passedValidation(): void
-    {
-        $this->merge(['action' => 'create', 'resource_uuid' => Str::uuid()]);
     }
 }
