@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\RailwayProviderRequestCreated;
+use App\Events\StoreRailwayProviderRequestCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class CreateRailwayProvider implements ShouldQueue
+class CreateRailwayProviderFromStoreRequest implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -20,9 +20,9 @@ class CreateRailwayProvider implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(RailwayProviderRequestCreated $event): void
+    public function handle(StoreRailwayProviderRequestCreated $event): void
     {
-        Log::debug('CreateRailwayProvider');
+        Log::debug('StoreCreateRailwayProvider');
         Log::debug($event->railwayProviderRequest->name);
     }
 }
