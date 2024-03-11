@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRailwayProviderRequest as StoreRequest;
 use App\Models\RailwayProviderEventStream as EventStream;
 use App\Models\StoreRailwayProviderRequest as StoreModel;
@@ -12,12 +13,12 @@ class RailwayProviderController extends Controller
 {
     public function index()
     {
-        return view('railway_providers.index');
+        return view('admin.railway_providers.index');
     }
 
     public function create()
     {
-        return view('railway_providers.create', ['initialParams' => [
+        return view('admin.railway_providers.create', ['initialParams' => [
             'token' => Str::random(64),
         ]]);
     }
@@ -39,6 +40,6 @@ class RailwayProviderController extends Controller
                 ['railway_provider_event_stream_id' => $eventStream['id']],
             )
         )->save();
-        return view('railway_providers.index');
+        return view('admin.railway_providers.index');
     }
 }
