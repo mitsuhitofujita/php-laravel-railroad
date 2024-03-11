@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('railway_providers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_stream_id');
+            $table->foreignId('railway_provider_event_stream_id');
             $table->timestamp('created_at')->useCurrent();
 
-            $table->foreign('event_stream_id')->references('id')->on('railway_provider_event_streams');
+            $table->foreign('railway_provider_event_stream_id')->references('id')->on('railway_provider_event_streams');
         });
     }
 
