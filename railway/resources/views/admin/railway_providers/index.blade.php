@@ -1,2 +1,2 @@
-<h2>railway index</h2>
-<a href="/admin/railway_providers/create">追加</a>
+<h2>鉄道会社一覧</h2>
+<a href="/admin/railway_providers/create">鉄道会社追加</a>

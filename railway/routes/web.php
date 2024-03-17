@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\RailwayProviderController;
+use App\Http\Controllers\Admin\RailwayRouteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +19,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::prefix('admin')->group(function () {
-    Route::get('/', [IndexController::class, 'index'])->name('admin.index.index');
-    Route::get('/railway_providers', [RailwayProviderController::class, 'index'])->name('admin.railway_providers.index');
-    Route::get('/railway_providers/create', [RailwayProviderController::class, 'create'])->name('admin.railway_providers.create');
-    Route::post('/railway_providers', [RailwayProviderController::class, 'store'])->name('admin.railway_providers.store');
-    Route::get('/railway_providers/{id}/edit', [RailwayProviderController::class, 'edit'])->name('admin.railway_providers.edit');
-    Route::put('/railway_providers/{id}', [RailwayProviderController::class, 'update'])->name('admin.railway_providers.update');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [IndexController::class, 'index'])->name('index.index');
+    Route::prefix('railway_providers')->name('railway_providers.')->group(function () {
+        Route::get('/', [RailwayProviderController::class, 'index'])->name('index');
+        Route::get('/create', [RailwayProviderController::class, 'create'])->name('create');
+        Route::post('/', [RailwayProviderController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [RailwayProviderController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [RailwayProviderController::class, 'update'])->name('update');
+    });
+    Route::prefix('/railway_routes')->name('railway_routes.')->group(function () {
+        Route::get('/', [RailwayRouteController::class, 'index'])->name('index');
+        Route::get('/create', [RailwayRouteController::class, 'create'])->name('create');
+        Route::post('/', [RailwayRouteController::class, 'store'])->name('store');
+        Route::get('/{railwayRouteId}/edit', [RailwayRouteController::class, 'edit'])->name('edit');
+        Route::put('/{railwayRouteId}', [RailwayRouteController::class, 'update'])->name('update');
+    });
 });

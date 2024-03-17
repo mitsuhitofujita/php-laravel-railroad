@@ -1,4 +1,4 @@
-<h2>railway edit</h2>
+<h2>鉄道会社編集</h2>
 <div>
     {{ html()->modelForm($initialParams, 'PUT', "/admin/railway_providers/${id}")->open() }}
         <div>
@@ -15,7 +15,7 @@
             @enderror
         </div>
         <div>
-            {{ html()->submit('新規追加') }}
+            {{ html()->submit('変更') }}
         </div>
     {{ html()->form()->close() }}
 </div>

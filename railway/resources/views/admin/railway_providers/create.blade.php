@@ -1,4 +1,4 @@
-<h2>railway create</h2>
+<h2>鉄道会社追加</h2>
 <div>
     {{ html()->modelForm($initialParams, 'POST', '/admin/railway_providers')->open() }}
         <div>
