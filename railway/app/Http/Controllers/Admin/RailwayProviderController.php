@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helpers\FormToken;
 use App\Http\Requests\StoreRailwayProviderRequest as StoreRequest;
 use App\Http\Requests\EditRailwayProviderRequest as EditRequest;
 use App\Http\Requests\UpdateRailwayProviderRequest as UpdateRequest;
@@ -10,7 +11,6 @@ use App\Models\RailwayProviderEventStream as EventStream;
 use App\Models\StoreRailwayProviderRequest as StoreModel;
 use App\Models\UpdateRailwayProviderRequest as UpdateModel;
 use App\Models\RailwayProvider;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class RailwayProviderController extends Controller
@@ -23,7 +23,7 @@ class RailwayProviderController extends Controller
     public function create()
     {
         return view('admin.railway_providers.create', ['initialParams' => [
-            'token' => Str::random(64),
+            'token' => FormToken::make(),
         ]]);
     }
 
@@ -54,7 +54,7 @@ class RailwayProviderController extends Controller
         return view('admin.railway_providers.edit', [
             'id' => $railwayProvider['id'],
             'initialParams' => [
-                'token' => Str::random(64),
+                'token' => FormToken::make(),
                 'name' => $railwayProvider['name'],
             ]
         ]);

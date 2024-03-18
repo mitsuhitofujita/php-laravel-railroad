@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helpers\FormToken;
 use App\Http\Requests\StoreRailwayRouteRequest as StoreRequest;
 use App\Http\Requests\EditRailwayRouteRequest as EditRequest;
 use App\Http\Requests\UpdateRailwayRouteRequest as UpdateRequest;
@@ -26,7 +27,7 @@ class RailwayRouteController extends Controller
     public function create()
     {
         return view('admin.railway_routes.create', ['initialParams' => [
-            'token' => Str::random(64),
+            'token' => FormToken::make(),
         ]]);
     }
 
@@ -68,7 +69,7 @@ class RailwayRouteController extends Controller
         return view('admin.railway_routes.edit', [
             'id' => $railwayRoute['id'],
             'initialParams' => [
-                'token' => Str::random(64),
+                'token' => FormToken::make(),
                 'railwayProviderId' => $railwayRouteDetail['railway_provider_id'],
                 'name' => $railwayRouteDetail['name'],
             ]
