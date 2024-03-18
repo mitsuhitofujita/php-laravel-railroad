@@ -5,13 +5,16 @@ namespace App\Listeners;
 use App\Events\UpdateRailwayRouteRequestCreated;
 use App\Models\RailwayRoute;
 use App\Models\RailwayRouteDetail;
+use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
-class CreateRailwayRouteFromUpdateRequest implements ShouldQueue
+class CreateRailwayRouteFromUpdateRequest implements ShouldQueue, ShouldHandleEventsAfterCommit
 {
+    use InteractsWithQueue;
+
     /**
      * Create the event listener.
      */
