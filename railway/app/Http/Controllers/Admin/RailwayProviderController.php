@@ -11,6 +11,7 @@ use App\Models\RailwayProviderEventStream as EventStream;
 use App\Models\StoreRailwayProviderRequest as StoreModel;
 use App\Models\UpdateRailwayProviderRequest as UpdateModel;
 use App\Models\RailwayProvider;
+use App\Models\RailwayProviderDetail;
 use Illuminate\Validation\ValidationException;
 
 class RailwayProviderController extends Controller
@@ -50,12 +51,13 @@ class RailwayProviderController extends Controller
     public function edit(EditRequest $request)
     {
         $railwayProvider = RailwayProvider::findOrFail($request->input('id'));
+        $railwayProviderDetail = RailwayProviderDetail::where(['railway_provider_id' => $railwayProvider->id])->orderBy('id', 'desc')->first();
 
         return view('admin.railway_providers.edit', [
             'id' => $railwayProvider['id'],
             'initialParams' => [
                 'token' => FormToken::make(),
-                'name' => $railwayProvider['name'],
+                'name' => $railwayProviderDetail['name'],
             ]
         ]);
     }

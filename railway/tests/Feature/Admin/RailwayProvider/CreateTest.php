@@ -15,6 +15,12 @@ class CreateTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(FixedSeeder::class);
+    }
+
     public function test_get_html_response_where_create_admin_railway_providers_path(): void
     {
         $response = $this->get('/admin/railway_providers/create');
@@ -24,7 +30,7 @@ class CreateTest extends TestCase
     public function test_get_validation_error_too_long_railway_provider_name_when_post(): void
     {
         $response = $this->post('/admin/railway_providers', [
-            'token' => 'token',
+            'token' => 'token 1',
             'name' => 'test railway provider name',
         ]);
         $response->assertSessionHasErrors(['name']);
@@ -32,7 +38,6 @@ class CreateTest extends TestCase
 
     public function test_get_validation_error_duplicate_token_when_post(): void
     {
-        $this->seed(FixedSeeder::class);
         $response = $this->post('/admin/railway_providers', [
             'token' => 'token',
             'name' => 'provider 2',
@@ -44,13 +49,13 @@ class CreateTest extends TestCase
     {
         Event::fake();
         $response = $this->post('/admin/railway_providers', [
-            'token' => 'token',
-            'name' => 'provider 1',
+            'token' => 'token 3',
+            'name' => 'provider 3',
         ]);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('store_railway_provider_requests', [
-            'name' => 'provider 1',
+            'name' => 'provider 3',
         ]);
         Event::assertDispatched(StoreRailwayProviderRequestCreated::class);
     }

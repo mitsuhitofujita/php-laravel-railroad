@@ -36,7 +36,6 @@ class CreateRailwayProviderFromStoreRequest implements ShouldQueue, ShouldHandle
             $railwayProvider = (new RailwayProvider())->fill([
                 'railway_provider_event_stream_id' => $event->storeRailwayProviderRequest['railway_provider_event_stream_id']
             ]);
-            Log::debug($railwayProvider);
             $railwayProvider->save();
 
             (new RailwayProviderDetail())->fill([
