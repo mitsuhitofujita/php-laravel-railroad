@@ -49,6 +49,20 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'railway_testing' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('DB_DATABASE_TESTING'),
+            'username' => 'laravel',
+            'password' => 'laravel',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
