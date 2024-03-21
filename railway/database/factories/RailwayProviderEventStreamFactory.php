@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\RailwayProviderEventStream;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RailwayProviderEventStreamFactory extends Factory
 {
+    protected $model = RailwayProviderEventStream::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,14 +20,5 @@ class RailwayProviderEventStreamFactory extends Factory
     public function definition(): array
     {
         return [];
-    }
-
-    public function fixed(): static
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'id' => 1,
-            ];
-        });
     }
 }

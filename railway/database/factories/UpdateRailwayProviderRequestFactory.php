@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\StoreRailwayProviderRequest;
+use App\Models\UpdateRailwayProviderRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StoreRailwayProviderRequest>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UpdateRailwayProviderRequest>
  */
-class StoreRailwayProviderRequestFactory extends Factory
+class UpdateRailwayProviderRequestFactory extends Factory
 {
-    protected $model = StoreRailwayProviderRequest::class;
+    protected $model = UpdateRailwayProviderRequest::class;
 
     /**
      * Define the model's default state.
