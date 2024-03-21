@@ -23,7 +23,7 @@ class UpdateRailwayProviderRequest extends FormRequest
     {
         return [
             'id' => 'required|integer',
-            'name' => 'required|max:10',
+            'name' => 'required|max:25',
         ];
     }
 

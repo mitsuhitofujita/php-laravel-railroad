@@ -23,7 +23,7 @@ class StoreRailwayRouteRequest extends FormRequest
     {
         return [
             'railwayProviderId' => 'required|integer|min:1',
-            'name' => 'required|max:10',
+            'name' => 'required|max:25',
         ];
     }
 

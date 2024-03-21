@@ -24,7 +24,7 @@ class UpdateRailwayRouteRequest extends FormRequest
         return [
             'railwayRouteId' => 'required|integer|min:1',
             'railwayProviderId' => 'required|integer|min:1',
-            'name' => 'required|max:10',
+            'name' => 'required|max:25',
         ];
     }
 
