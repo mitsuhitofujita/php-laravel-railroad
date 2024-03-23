@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\RailwayProviderDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RailwayProviderDetail>
@@ -19,8 +20,6 @@ class RailwayProviderDetailFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => 'provider'
-        ];
+        return [];
     }
 }

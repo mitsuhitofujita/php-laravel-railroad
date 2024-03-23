@@ -16,11 +16,13 @@ return new class extends Migration
             $table->text('token')->unique('update_railway_provider_request_unique_1');
             $table->foreignId('railway_provider_event_stream_id')->index('update_railway_provider_request_index_1');
             $table->foreignId('railway_provider_id');
+            $table->timestamp('valid_from', 6);
+            $table->timestamp('valid_to', 6)->nullable();
             $table->text('name');
+            $table->timestamp('created_at', 6)->useCurrent();
 
             $table->foreign('railway_provider_id')->references('id')->on('railway_providers');
             $table->foreign('railway_provider_event_stream_id')->references('id')->on('railway_provider_event_streams');
-            $table->timestamp('created_at')->useCurrent();
         });
     }
 

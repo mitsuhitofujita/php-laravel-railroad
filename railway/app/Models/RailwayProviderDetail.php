@@ -11,15 +11,21 @@ class RailwayProviderDetail extends Model
 
     protected $table = 'railway_provider_details';
 
-    const UPDATED_AT = null;
-
     protected $fillable = [
         'railway_provider_id',
+        'valid_from',
+        'valid_to',
         'name',
     ];
 
     protected $casts = [
         'railway_provider_id' => 'integer',
+        'valid_from' => 'datetime',
+        'valid_to' => 'datetime',
+        'name' => 'string',
         'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s.u';
 }
