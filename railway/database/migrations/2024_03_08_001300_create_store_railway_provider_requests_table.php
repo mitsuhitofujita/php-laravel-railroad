@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('token')->unique('store_railway_provider_request_unique_1');
             $table->foreignId('railway_provider_event_stream_id')->index('store_railway_provider_request_index_1');
             $table->timestamp('valid_from', 6);
-            $table->timestamp('valid_to', 6)->nullable();
             $table->text('name');
             $table->timestamp('created_at', 6)->useCurrent();
 

@@ -22,13 +22,16 @@ class StoreRailwayProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:25',
+            'valid_from' => 'required|date',
+            'name' => 'required|string|max:25',
         ];
     }
 
     public function messages(): array
     {
         return [
+            'valid_from.required' => '入力内容の適用を開始する日時が指定されていません',
+            'valid_from.date' => '入力内容の適用を開始する日時が不正です',
             'name.required' => '鉄道会社名を入力してください',
             'name.max' => '鉄道会社名が長すぎです',
         ];

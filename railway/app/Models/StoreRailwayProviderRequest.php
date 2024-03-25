@@ -21,17 +21,17 @@ class StoreRailwayProviderRequest extends Model
         'token',
         'railway_provider_event_stream_id',
         'valid_from',
-        'valid_to',
         'name',
     ];
 
     protected $casts = [
         'railway_provider_event_stream_id' => 'integer',
         'valid_from' => 'datetime',
-        'valid_to' => 'datetime',
         'name' => 'string',
         'created_at' => 'datetime',
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $dispatchesEvents = [
         'created' => StoreRailwayProviderRequestCreated::class,

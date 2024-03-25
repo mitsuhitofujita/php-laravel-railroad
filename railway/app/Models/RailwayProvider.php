@@ -25,6 +25,8 @@ class RailwayProvider extends Model
         'created_at' => 'datetime',
     ];
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     protected $dispatchesEvents = [
         'created' => RailwayProviderCreated::class,
     ];

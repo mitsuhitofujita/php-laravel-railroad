@@ -23,9 +23,14 @@ class RailwayProviderController extends Controller
 
     public function create()
     {
-        return view('admin.railway_providers.create', ['initialParams' => [
-            'token' => FormToken::make(),
-        ]]);
+        return view(
+            'admin.railway_providers.create',
+            [
+                'initialValues' => [
+                    'token' => FormToken::make(),
+                ]
+            ]
+        );
     }
 
     public function store(StoreRequest $request)
@@ -39,25 +44,25 @@ class RailwayProviderController extends Controller
         $eventStream = new EventStream();
         $eventStream->save();
 
-        (new StoreModel())->fill(
-            array_merge(
-                $request->all(),
-                ['railway_provider_event_stream_id' => $eventStream['id']],
-            )
-        )->save();
-        return view('admin.railway_providers.index');
+        (new StoreModel())
+            ->fill($request->all())
+            ->fill([
+                'railway_provider_event_stream_id' => $eventStream['id'],
+            ])
+            ->save();
+        return redirect()->route('admin.railway_providers.index');
     }
 
     public function edit(EditRequest $request)
     {
-        $railwayProvider = RailwayProvider::findOrFail($request->input('id'));
-        $railwayProviderDetail = RailwayProviderDetail::where(['railway_provider_id' => $railwayProvider->id])->orderBy('id', 'desc')->first();
+        $railwayProvider = RailwayProvider::findOrFail($request->input('railway_provider_id'));
 
         return view('admin.railway_providers.edit', [
-            'id' => $railwayProvider['id'],
-            'initialParams' => [
+            'railwayProviderId' => $railwayProvider['id'],
+            'initialValues' => [
                 'token' => FormToken::make(),
-                'name' => $railwayProviderDetail['name'],
+                'valid_from' => $railwayProvider['valid_from'],
+                'name' => $railwayProvider['name'],
             ]
         ]);
     }
@@ -70,17 +75,15 @@ class RailwayProviderController extends Controller
             ]);
         }
 
-        $railwayProvider = RailwayProvider::findOrFail($request->input('id'));
+        $railwayProvider = RailwayProvider::findOrFail($request->input('railway_provider_id'));
 
-        (new UpdateModel())->fill(
-            array_merge(
-                $request->all(),
-                [
-                    'railway_provider_id' => $request->input('id'),
-                    'railway_provider_event_stream_id' => $railwayProvider['railway_provider_event_stream_id'],
-                ],
-            )
-        )->save();
-        return view('admin.railway_providers.index');
+        (new UpdateModel())
+            ->fill($request->all())
+            ->fill([
+                'railway_provider_event_stream_id' => $railwayProvider['railway_provider_event_stream_id'],
+                'railway_provider_id' => $railwayProvider['id'],
+            ])
+            ->save();
+        return redirect()->route('admin.railway_providers.index');
     }
 }

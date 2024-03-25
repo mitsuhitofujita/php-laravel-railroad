@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('railway_provider_event_stream_id')->index('update_railway_provider_request_index_1');
             $table->foreignId('railway_provider_id');
             $table->timestamp('valid_from', 6);
-            $table->timestamp('valid_to', 6)->nullable();
             $table->text('name');
             $table->timestamp('created_at', 6)->useCurrent();
 

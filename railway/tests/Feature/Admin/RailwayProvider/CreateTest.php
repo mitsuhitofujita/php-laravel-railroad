@@ -11,6 +11,7 @@ use App\Models\StoreRailwayProviderRequest;
 use Database\Seeders\Test\Admin\RailwayProvider\FixedSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -29,7 +30,8 @@ class CreateTest extends TestCase
     {
         $response = $this->post('/admin/railway_providers', [
             'token' => 'token 1',
-            'name' => 'test railway provider name',
+            'valid_from' => '2024-01-01 00:00:00.000000',
+            'name' => 'too long test railway provider name',
         ]);
         $response->assertSessionHasErrors(['name']);
     }
@@ -43,6 +45,7 @@ class CreateTest extends TestCase
                 return [
                     'railway_provider_event_stream_id' => $railwayProviderEventStream['id'],
                     'token' => FormToken::make(),
+                    'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider'
                 ];
             })
@@ -50,6 +53,7 @@ class CreateTest extends TestCase
 
         $response = $this->post('/admin/railway_providers', [
             'token' => $storeRailwayProviderRequest['token'],
+            'valid_from' => '2024-01-01 00:00:00.000000',
             'name' => 'existing provider',
         ]);
         $response->assertSessionHasErrors(['token']);
@@ -60,12 +64,14 @@ class CreateTest extends TestCase
         Event::fake();
         $response = $this->post('/admin/railway_providers', [
             'token' => 'target token',
+            'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target provider',
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('store_railway_provider_requests', [
             'token' => 'target token',
+            'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target provider',
         ]);
         Event::assertDispatched(StoreRailwayProviderRequestCreated::class);

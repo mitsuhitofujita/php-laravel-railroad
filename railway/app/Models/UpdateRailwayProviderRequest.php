@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\UpdateRailwayProviderRequestCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
-class StoreRailwayProviderDetailRequest extends Model
+class UpdateRailwayProviderRequest extends Model
 {
     use HasFactory;
     use Notifiable;
 
-    protected $table = 'store_railway_provider_detail_requests';
+    protected $table = 'update_railway_provider_requests';
 
     const UPDATED_AT = null;
 
@@ -22,7 +21,6 @@ class StoreRailwayProviderDetailRequest extends Model
         'railway_provider_event_stream_id',
         'railway_provider_id',
         'valid_from',
-        'valid_to',
         'name',
     ];
 
@@ -30,13 +28,14 @@ class StoreRailwayProviderDetailRequest extends Model
         'railway_provider_event_stream_id' => 'integer',
         'railway_provider_id' => 'integer',
         'valid_from' => 'datetime',
-        'valid_to' => 'datetime',
         'name' => 'string',
         'created_at' => 'datetime',
     ];
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     protected $dispatchesEvents = [
-        // 'created' => StoreRailwayProviderDetailRequestCreated::class,
+        'created' => UpdateRailwayProviderRequestCreated::class,
     ];
 
     public static function existsToken(string $token): bool

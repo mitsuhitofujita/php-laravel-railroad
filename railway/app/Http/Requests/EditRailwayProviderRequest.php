@@ -22,13 +22,13 @@ class EditRailwayProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
+            'railway_provider_id' => 'required|integer|min:1',
         ];
     }
 
     protected function prepareForValidation()
     {
-        $this->merge(['id' => $this->route('id')]);
+        $this->merge(['railway_provider_id' => $this->route('railway_provider_id')]);
     }
 
 }

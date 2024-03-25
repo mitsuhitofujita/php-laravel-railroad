@@ -10,6 +10,7 @@ use App\Models\RailwayProviderDetail;
 use App\Models\UpdateRailwayProviderRequest;
 use Database\Seeders\Test\Admin\RailwayProvider\FixedSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -32,12 +33,13 @@ class UpdateTest extends TestCase
             ->state(function () use ($railwayProvider) {
                 return [
                     'railway_provider_id' => $railwayProvider['id'],
+                    'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider',
                 ];
             })
             ->create();
 
-        $response = $this->get("/admin/railway_providers/{$railwayProvider->id}/edit");
+        $response = $this->get("/admin/railway_providers/{$railwayProvider['id']}/edit");
         $response->assertStatus(200);
     }
 
@@ -56,6 +58,7 @@ class UpdateTest extends TestCase
             ->state(function () use ($railwayProvider) {
                 return [
                     'railway_provider_id' => $railwayProvider['id'],
+                    'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider',
                 ];
             })
@@ -63,6 +66,7 @@ class UpdateTest extends TestCase
 
         $response = $this->put("/admin/railway_providers/{$railwayProvider['id']}", [
             'token' => FormToken::make(),
+            'valid_from' => '2024-01-01 00:00:00.000000',
             'name' => 'too long railway provider name for test',
         ]);
         $response->assertSessionHasErrors(['name']);
@@ -85,6 +89,7 @@ class UpdateTest extends TestCase
                     'railway_provider_event_stream_id' => $railwayProviderEventStream['id'],
                     'railway_provider_id' => $railwayProvider['id'],
                     'token' => FormToken::make(),
+                    'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider'
                 ];
             })
@@ -92,6 +97,7 @@ class UpdateTest extends TestCase
 
         $response = $this->put("/admin/railway_providers/{$railwayProvider['id']}", [
             'token' => $updateRailwayProviderRequest['token'],
+            'valid_from' => '2024-01-01 00:00:00.000000',
             'name' => 'provider',
         ]);
         $response->assertSessionHasErrors(['token']);
@@ -108,18 +114,22 @@ class UpdateTest extends TestCase
         $railwayProviderDetail = RailwayProviderDetail::factory()->state(function () use ($railwayProvider) {
             return [
                 'railway_provider_id' => $railwayProvider['id'],
+                'valid_from' => '2024-01-01 00:00:00.000000',
+                'name' => 'name',
             ];
         })->create();
 
         Event::fake();
         $response = $this->put("/admin/railway_providers/{$railwayProvider['id']}", [
             'token' => 'target token',
+            'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target name',
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('update_railway_provider_requests', [
             'token' => 'target token',
+            'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target name',
         ]);
         Event::assertDispatched(UpdateRailwayProviderRequestCreated::class);
