@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RailwayProviderDetail extends Model
+class RailwayProviderHistoryDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'railway_provider_details';
+    protected $table = 'railway_provider_history_details';
 
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'valid_from',
-        'name',
+        'railway_provider_history_id',
+        'railway_provider_detail_id',
     ];
 
     protected $casts = [
-        'valid_from' => 'datetime',
-        'name' => 'string',
+        'railway_provider_history_id' => 'integer',
+        'railway_provider_detail_id' => 'integer',
         'created_at' => 'datetime',
     ];
 
