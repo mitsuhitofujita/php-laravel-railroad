@@ -32,7 +32,6 @@ class UpdateTest extends TestCase
         $railwayProviderDetail = RailwayProviderDetail::factory()
             ->state(function () use ($railwayProvider) {
                 return [
-                    'railway_provider_id' => $railwayProvider['id'],
                     'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider',
                 ];
@@ -57,7 +56,6 @@ class UpdateTest extends TestCase
         $railwayProviderDetail = RailwayProviderDetail::factory()
             ->state(function () use ($railwayProvider) {
                 return [
-                    'railway_provider_id' => $railwayProvider['id'],
                     'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
                     'name' => 'provider',
                 ];
@@ -113,7 +111,6 @@ class UpdateTest extends TestCase
         })->create();
         $railwayProviderDetail = RailwayProviderDetail::factory()->state(function () use ($railwayProvider) {
             return [
-                'railway_provider_id' => $railwayProvider['id'],
                 'valid_from' => '2024-01-01 00:00:00.000000',
                 'name' => 'name',
             ];

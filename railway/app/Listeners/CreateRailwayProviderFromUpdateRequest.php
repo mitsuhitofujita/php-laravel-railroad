@@ -5,6 +5,8 @@ namespace App\Listeners;
 use App\Events\UpdateRailwayProviderRequestCreated;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderDetail;
+use App\Models\RailwayProviderHistory;
+use App\Models\RailwayProviderHistoryDetail;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\DB;
 class CreateRailwayProviderFromUpdateRequest implements ShouldQueue, ShouldHandleEventsAfterCommit
 {
     use InteractsWithQueue;
+
+    public RailwayProviderHistory $railwayProviderHistory;
+    public RailwayProviderDetail $railwayProviderDetail;
+    public RailwayProviderHistoryDetail $railwayProviderHistoryDetail;
 
     /**
      * Create the event listener.
@@ -28,14 +34,27 @@ class CreateRailwayProviderFromUpdateRequest implements ShouldQueue, ShouldHandl
      */
     public function handle(UpdateRailwayProviderRequestCreated $event): void
     {
-        Log::debug('UpdateCreateRailwayProvider');
-        Log::debug($event->updateRailwayProviderRequest['railway_provider_id']);
-        Log::debug($event->updateRailwayProviderRequest['name']);
+        DB::transaction(function () use ($event) {
+            $railwayProviderHistory = RailwayProviderHistory::where('railway_provider_id', $event->getRailwayProviderId())
+                ->orderBy('id', 'desc')
+                ->firstOrFail();
 
-        $detail = (new RailwayProviderDetail())->fill([
-            'railway_provider_id' => $event->updateRailwayProviderRequest['railway_provider_id'],
-            'name' => $event->updateRailwayProviderRequest['name'],
-        ]);
-        $detail->save();
+            $railwayProviderDetail = (new RailwayProviderDetail())->fill([
+                'valid_from' => $event->updateRailwayProviderRequest['valid_from'],
+                'name' => $event->updateRailwayProviderRequest['name'],
+            ]);
+            $railwayProviderDetail->save();
+
+            $railwayProviderHistoryDetail = (new RailwayProviderHistoryDetail())
+                ->fill([
+                    'railway_provider_history_id' => $railwayProviderHistory['id'],
+                    'railway_provider_detail_id' => $railwayProviderDetail['id'],
+                ]);
+            $railwayProviderHistoryDetail->save();
+
+            $this->railwayProviderHistory = $railwayProviderHistory;
+            $this->railwayProviderDetail = $railwayProviderDetail;
+            $this->railwayProviderHistoryDetail = $railwayProviderHistoryDetail;
+        });
     }
 }

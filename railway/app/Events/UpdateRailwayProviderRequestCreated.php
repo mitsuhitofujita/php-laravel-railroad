@@ -33,4 +33,9 @@ class UpdateRailwayProviderRequestCreated
             new PrivateChannel('channel-name'),
         ];
     }
+
+    public function getRailwayProviderId(): int
+    {
+        return $this->updateRailwayProviderRequest['railway_provider_id'];
+    }
 }
