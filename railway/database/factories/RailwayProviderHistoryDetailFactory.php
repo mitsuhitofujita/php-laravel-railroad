@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\RailwayProviderDetail;
+use App\Models\RailwayProviderHistoryDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RailwayProviderDetail>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RailwayProviderHistoryDetail>
  */
-class RailwayProviderDetailFactory extends Factory
+class RailwayProviderHistoryDetailFactory extends Factory
 {
-    protected $model = RailwayProviderDetail::class;
+    protected $model = RailwayProviderHistoryDetail::class;
 
     /**
      * Define the model's default state.

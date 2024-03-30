@@ -25,6 +25,7 @@ class UpdateRailwayProviderRequest extends Model
     ];
 
     protected $casts = [
+        'token' => 'string',
         'railway_provider_event_stream_id' => 'integer',
         'railway_provider_id' => 'integer',
         'valid_from' => 'datetime',

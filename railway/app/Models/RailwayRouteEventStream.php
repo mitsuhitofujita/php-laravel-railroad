@@ -18,4 +18,6 @@ class RailwayRouteEventStream extends Model
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s.u';
 }
