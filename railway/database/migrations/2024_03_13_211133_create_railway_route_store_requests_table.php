@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('update_railway_route_requests', function (Blueprint $table) {
+        Schema::create('railway_route_store_requests', function (Blueprint $table) {
             $table->id();
-            $table->text('token')->unique('update_railway_route_request_unique_1');
-            $table->foreignId('railway_route_event_stream_id')->index('update_railway_route_request_index_1');
-
-            $table->foreignId('railway_route_id');
+            $table->text('token')->unique('railway_route_store_request_1');
+            $table->foreignId('railway_route_event_stream_id')->index('railway_route_store_request_2');
 
             $table->foreignId('railway_provider_id');
+            $table->datetime('valid_from', 6);
             $table->text('name');
-            $table->timestamp('created_at')->useCurrent();
+            $table->datetime('created_at', 6)->useCurrent();
 
             $table->foreign('railway_route_event_stream_id')->references('id')->on('railway_route_event_streams');
-            $table->foreign('railway_route_id')->references('id')->on('railway_routes');
             $table->foreign('railway_provider_id')->references('id')->on('railway_providers');
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('update_railway_route_requests');
+        Schema::dropIfExists('railway_route_store_requests');
     }
 };

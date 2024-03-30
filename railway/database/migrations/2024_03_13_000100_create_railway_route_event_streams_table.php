@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('railway_route_event_streams', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('created_at')->useCurrent();
+            $table->datetime('created_at', 6)->useCurrent();
         });
     }
 

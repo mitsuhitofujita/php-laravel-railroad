@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('railway_route_event_stream_id');
 
-            $table->timestamp('created_at')->useCurrent();
+            $table->datetime('created_at', 6)->useCurrent();
 
             $table->foreign('railway_route_event_stream_id')->references('id')->on('railway_route_event_streams');
         });
