@@ -12,6 +12,8 @@ use App\Models\StoreRailwayProviderRequest as StoreModel;
 use App\Models\UpdateRailwayProviderRequest as UpdateModel;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderDetail;
+use App\Models\RailwayProviderHistory;
+use App\Models\RailwayProviderHistoryDetail;
 use Illuminate\Validation\ValidationException;
 
 class RailwayProviderController extends Controller
@@ -56,13 +58,21 @@ class RailwayProviderController extends Controller
     public function edit(EditRequest $request)
     {
         $railwayProvider = RailwayProvider::findOrFail($request->input('railway_provider_id'));
+        $railwayProviderHistory = RailwayProviderHistory::where('railway_provider_id', $request->input('railway_provider_id'))
+            ->orderBy('id', 'desc')
+            ->firstOrFail();
+        $railwayProviderHistoryDetails = RailwayProviderHistoryDetail::where('railway_provider_history_id', $railwayProviderHistory['id'])
+            ->get();
+        $railwayProviderDetail = RailwayProviderDetail::whereIn('id', $railwayProviderHistoryDetails->pluck('railway_provider_detail_id'))
+            ->orderBy('valid_from', 'desc')
+            ->firstOrFail();
 
         return view('admin.railway_providers.edit', [
             'railwayProviderId' => $railwayProvider['id'],
             'initialValues' => [
                 'token' => FormToken::make(),
-                'valid_from' => $railwayProvider['valid_from'],
-                'name' => $railwayProvider['name'],
+                'valid_from' => $railwayProviderDetail['valid_from'],
+                'name' => $railwayProviderDetail['name'],
             ]
         ]);
     }

@@ -7,6 +7,8 @@ use App\Http\Controllers\Helpers\FormToken;
 use App\Models\RailwayProviderEventStream;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderDetail;
+use App\Models\RailwayProviderHistory;
+use App\Models\RailwayProviderHistoryDetail;
 use App\Models\UpdateRailwayProviderRequest;
 use Database\Seeders\Test\Admin\RailwayProvider\FixedSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,23 +22,25 @@ class UpdateTest extends TestCase
 
     public function test_get_html_response_where_edit_admin_railway_providers_path(): void
     {
-        $railwayProviderEventStream = RailwayProviderEventStream::factory()
-            ->create();
-        $railwayProvider = RailwayProvider::factory()
-            ->state(function () use ($railwayProviderEventStream) {
-                return [
-                    'railway_provider_event_stream_id' => $railwayProviderEventStream['id'],
-                ];
-            })
-            ->create();
-        $railwayProviderDetail = RailwayProviderDetail::factory()
-            ->state(function () use ($railwayProvider) {
-                return [
-                    'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
-                    'name' => 'provider',
-                ];
-            })
-            ->create();
+        $railwayProviderEventStream = RailwayProviderEventStream::factory()->create();
+
+        $railwayProvider = RailwayProvider::factory()->state([
+            'railway_provider_event_stream_id' => $railwayProviderEventStream['id'],
+        ])->create();
+
+        $storyRailwayProviderDetail = RailwayProviderDetail::factory()->state([
+            'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
+            'name' => '鉄道会社',
+        ])->create();
+
+        $railwayProviderHistory = RailwayProviderHistory::factory()->state([
+            'railway_provider_id' => $railwayProvider['id'],
+        ])->create();
+
+        RailwayProviderHistoryDetail::factory()->state([
+            'railway_provider_history_id' => $railwayProviderHistory['id'],
+            'railway_provider_detail_id' => $storyRailwayProviderDetail['id'],
+        ])->create();
 
         $response = $this->get("/admin/railway_providers/{$railwayProvider['id']}/edit");
         $response->assertStatus(200);
