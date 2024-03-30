@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('railway_route_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('railway_route_id');
             $table->foreignId('railway_provider_id');
             $table->datetime('valid_from', 6);
             $table->text('name');
             $table->datetime('created_at', 6)->useCurrent();
 
-            $table->foreign('railway_route_id')->references('id')->on('railway_routes');
             $table->foreign('railway_provider_id')->references('id')->on('railway_providers');
         });
     }

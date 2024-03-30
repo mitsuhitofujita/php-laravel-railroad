@@ -2,37 +2,40 @@
 
 namespace App\Models;
 
-use App\Events\UpdateRailwayRouteRequestCreated;
+use App\Events\RailwayRouteStoreRequestCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class UpdateRailwayRouteRequest extends Model
+class RailwayRouteStoreRequest extends Model
 {
     use HasFactory;
     use Notifiable;
 
-    protected $table = 'update_railway_route_requests';
+    protected $table = 'railway_route_store_requests';
 
     const UPDATED_AT = null;
 
     protected $fillable = [
         'token',
         'railway_route_event_stream_id',
-        'railway_route_id',
         'railway_provider_id',
+        'valid_from',
         'name',
     ];
 
     protected $casts = [
         'railway_provider_event_stream_id' => 'integer',
-        'railway_route_id' => 'integer',
         'railway_provider_id' => 'integer',
+        'valid_from' => 'datetime',
+        'name' => 'string',
         'created_at' => 'datetime',
     ];
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     protected $dispatchesEvents = [
-        'created' => UpdateRailwayRouteRequestCreated::class,
+        'created' => RailwayRouteStoreRequestCreated::class,
     ];
 
     public static function existsToken(string $token): bool

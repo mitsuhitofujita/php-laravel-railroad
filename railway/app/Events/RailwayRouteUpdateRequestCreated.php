@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\StoreRailwayRouteRequest;
+use App\Models\RailwayRouteUpdateRequest;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,14 +11,14 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StoreRailwayRouteRequestCreated
+class RailwayRouteUpdateRequestCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public StoreRailwayRouteRequest $storeRailwayRouteRequest)
+    public function __construct(public RailwayRouteUpdateRequest $railwayRouteUpdateRequest)
     {
     }
 

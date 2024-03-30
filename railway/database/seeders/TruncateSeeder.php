@@ -11,9 +11,11 @@ use App\Models\StoreRailwayProviderRequest;
 use App\Models\UpdateRailwayProviderRequest;
 use App\Models\RailwayRoute;
 use App\Models\RailwayRouteDetail;
+use App\Models\RailwayRouteHistory;
+use App\Models\RailwayRouteHistoryDetail;
+use App\Models\RailwayRouteStoreRequest;
+use App\Models\RailwayRouteUpdateRequest;
 use App\Models\RailwayRouteEventStream;
-use App\Models\StoreRailwayRouteRequest;
-use App\Models\UpdateRailwayRouteRequest;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,8 +35,11 @@ class TruncateSeeder extends Seeder
         RailwayProviderDetail::truncate();
         RailwayProvider::truncate();
         RailwayProviderEventStream::truncate();
-        UpdateRailwayRouteRequest::truncate();
-        StoreRailwayRouteRequest::truncate();
+
+        RailwayRouteUpdateRequest::truncate();
+        RailwayRouteStoreRequest::truncate();
+        RailwayRouteHistoryDetail::truncate();
+        RailwayRouteHistory::truncate();
         RailwayRouteDetail::truncate();
         RailwayRoute::truncate();
         RailwayRouteEventStream::truncate();
