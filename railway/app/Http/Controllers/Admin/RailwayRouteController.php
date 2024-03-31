@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers\FormToken;
-use App\Http\Requests\StoreRailwayRouteRequest as StoreRequest;
-use App\Http\Requests\EditRailwayRouteRequest as EditRequest;
-use App\Http\Requests\UpdateRailwayRouteRequest as UpdateRequest;
+use App\Http\Requests\RailwayRouteStoreRequest as StoreRequest;
+use App\Http\Requests\RailwayRouteEditRequest as EditRequest;
+use App\Http\Requests\RailwayRouteUpdateRequest as UpdateRequest;
 use App\Models\RailwayRouteEventStream as EventStream;
-use App\Models\StoreRailwayRouteRequest as StoreModel;
-use App\Models\UpdateRailwayRouteRequest as UpdateModel;
+use App\Models\RailwayRouteStoreRequest as StoreModel;
+use App\Models\RailwayRouteUpdateRequest as UpdateModel;
 use App\Models\RailwayProvider;
 use App\Models\RailwayRoute;
 use App\Models\RailwayRouteDetail;
+use App\Models\RailwayRouteHistory;
+use App\Models\RailwayRouteHistoryDetail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -39,10 +41,10 @@ class RailwayRouteController extends Controller
             ]);
         }
 
-        $railwayProvider = RailwayProvider::find($request->input('railwayProviderId'));
+        $railwayProvider = RailwayProvider::find($request->input('railway_provider_id'));
         if ($railwayProvider === null) {
             throw ValidationException::withMessages([
-                'railwayProviderId' => ['不正な路線会社IDです。'],
+                'railway_provider_id' => ['不正な路線会社IDです。'],
             ]);
         }
 
@@ -50,27 +52,35 @@ class RailwayRouteController extends Controller
             $eventStream = new EventStream();
             $eventStream->save();
 
-            (new StoreModel())->fill([
-                'token' => $request->input('token'),
-                'railway_route_event_stream_id' => $eventStream['id'],
-                'railway_provider_id' => $request->input('railwayProviderId'),
-                'name' => $request->input('name'),
-            ])->save();
+            (new StoreModel())
+                ->fill($request->all())
+                ->fill([
+                    'railway_route_event_stream_id' => $eventStream['id'],
+                ])
+                ->save();
         });
 
-        return view('admin.railway_routes.index');
+        return redirect()->route('admin.railway_routes.index');
     }
 
     public function edit(EditRequest $request)
     {
-        $railwayRoute = RailwayRoute::findOrFail($request->input('railwayRouteId'));
-        $railwayRouteDetail = RailwayRouteDetail::where(['railway_route_id' => $railwayRoute->id])->orderBy('id', 'desc')->first();
+        $railwayRoute = RailwayRoute::findOrFail($request->input('railway_route_id'));
+        $railwayRouteHistory = RailwayRouteHistory::where('railway_route_id', $request->input('railway_route_id'))
+            ->orderBy('id', 'desc')
+            ->firstOrFail();
+        $railwayRouteHistoryDetails = RailwayRouteHistoryDetail::where('railway_route_history_id', $railwayRouteHistory['id'])
+            ->get();
+        $railwayRouteDetail = RailwayRouteDetail::whereIn('id', $railwayRouteHistoryDetails->pluck('railway_route_detail_id'))
+            ->orderBy('valid_from', 'desc')
+            ->firstOrFail();
 
         return view('admin.railway_routes.edit', [
-            'id' => $railwayRoute['id'],
+            'railwayRouteId' => $railwayRoute['id'],
             'initialParams' => [
                 'token' => FormToken::make(),
-                'railwayProviderId' => $railwayRouteDetail['railway_provider_id'],
+                'valid_from' => $railwayRouteDetail['valid_from'],
+                'railway_provider_id' => $railwayRouteDetail['railway_provider_id'],
                 'name' => $railwayRouteDetail['name'],
             ]
         ]);
@@ -84,22 +94,22 @@ class RailwayRouteController extends Controller
             ]);
         }
 
-        $railwayProvider = RailwayProvider::find($request->input('railwayProviderId'));
+        $railwayProvider = RailwayProvider::find($request->input('railway_provider_id'));
         if ($railwayProvider === null) {
             throw ValidationException::withMessages([
                 'railwayProviderId' => ['不正な路線会社IDです。'],
             ]);
         }
 
-        $railwayRoute = RailwayRoute::findOrFail($request->input('railwayRouteId'));
+        $railwayRoute = RailwayRoute::findOrFail($request->input('railway_route_id'));
 
-        (new UpdateModel())->fill([
-            'token' => $request->input('token'),
-            'railway_route_event_stream_id' => $railwayRoute['railway_route_event_stream_id'],
-            'railway_route_id' => $railwayRoute['id'],
-            'railway_provider_id' => $request->input('railwayProviderId'),
-            'name' => $request->input('name'),
-        ])->save();
-        return view('admin.railway_routes.index');
+        (new UpdateModel())
+            ->fill($request->all())
+            ->fill([
+                'railway_route_event_stream_id' => $railwayRoute['railway_route_event_stream_id'],
+                'railway_route_id' => $railwayRoute['id'],
+            ])->save();
+
+        return redirect()->route('admin.railway_routes.index');
     }
 }

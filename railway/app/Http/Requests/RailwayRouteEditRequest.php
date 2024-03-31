@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditRailwayRouteRequest extends FormRequest
+class RailwayRouteEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,23 +22,23 @@ class EditRailwayRouteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'railwayRouteId' => 'required|integer|min:1',
+            'railway_route_id' => 'required|integer|min:1',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'railwayRouteId.required' => '鉄道路線IDが指定されていません',
-            'railwayRouteId.integer' => '鉄道路線IDが不正です',
-            'railwayRouteId.min' => '鉄道路線IDが不正です',
+            'railway_route_id.required' => '鉄道路線IDが指定されていません',
+            'railway_route_id.integer' => '鉄道路線IDが不正です',
+            'railway_route_id.min' => '鉄道路線IDが不正です',
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-            'railwayRouteId' => $this->route('railwayRouteId'),
+            'railway_route_id' => $this->route('railway_route_id'),
         ]);
     }
 }

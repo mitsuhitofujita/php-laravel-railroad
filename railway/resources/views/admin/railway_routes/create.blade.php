@@ -2,9 +2,16 @@
 <div>
     {{ html()->modelForm($initialParams, 'POST', '/admin/railway_routes')->open() }}
         <div>
+            {{ html()->label('適用開始日')->for('railway-providers-create-valid-from') }}
+            {{ html()->text('valid_from')->id('railway-providers-create-valid-from') }}
+            @error('valid_from')
+                {{ html()->span($message) }}
+            @enderror
+        </div>
+        <div>
             {{ html()->label('鉄道会社ID')->for('railway-routes-create-railway-provider-id') }}
-            {{ html()->text('railwayProviderId')->id('railway-routes-create-railway-provider-id') }}
-            @error('railwayProviderId')
+            {{ html()->text('railway_provider_id')->id('railway-routes-create-railway-provider-id') }}
+            @error('railway_provider_id')
                 {{ html()->span($message) }}
             @enderror
         </div>

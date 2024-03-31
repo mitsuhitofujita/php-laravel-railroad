@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRailwayRouteRequest extends FormRequest
+class RailwayRouteStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class StoreRailwayRouteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'railwayProviderId' => 'required|integer|min:1',
+            'railway_provider_id' => 'required|integer|min:1',
+            'valid_from' => 'required|date',
             'name' => 'required|max:25',
         ];
     }
@@ -30,9 +31,11 @@ class StoreRailwayRouteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'railwayProviderId.required' => '鉄道会社IDが指定されていません',
-            'railwayProviderId.integer' => '鉄道会社IDが不正です',
-            'railwayProviderId.min' => '鉄道会社IDが不正です',
+            'railway_provider_id.required' => '鉄道会社IDが指定されていません',
+            'railway_provider_id.integer' => '鉄道会社IDが不正ですint',
+            'railway_provider_id.min' => '鉄道会社IDが不正ですmin',
+            'valid_from.required' => '入力内容の適用を開始する日時が指定されていません',
+            'valid_from.date' => '入力内容の適用を開始する日時が不正です',
             'name.required' => '鉄道路線名を入力してください',
             'name.max' => '鉄道路線名が長すぎです',
         ];

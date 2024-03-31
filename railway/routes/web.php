@@ -34,8 +34,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [RailwayRouteController::class, 'index'])->name('index');
         Route::get('/create', [RailwayRouteController::class, 'create'])->name('create');
         Route::post('/', [RailwayRouteController::class, 'store'])->name('store');
-        Route::get('/{railwayRouteId}/edit', [RailwayRouteController::class, 'edit'])->name('edit');
-        Route::put('/{railwayRouteId}', [RailwayRouteController::class, 'update'])->name('update');
+        Route::get('/{railway_route_id}/edit', [RailwayRouteController::class, 'edit'])->name('edit');
+        Route::put('/{railway_route_id}', [RailwayRouteController::class, 'update'])->name('update');
     });
     // Route::prefix('/railway_stations')->name('railway_stations.')->group(function () {
     //     Route::get('/', [RailwayStationController::class, 'index'])->name('index');
