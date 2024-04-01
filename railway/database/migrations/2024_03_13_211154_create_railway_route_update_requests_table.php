@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('railway_route_update_requests', function (Blueprint $table) {
             $table->id();
             $table->text('token')->unique('railway_route_update_request_1');
-            $table->foreignId('railway_route_event_stream_id')->index('update_railway_route_request_2');
+            $table->foreignId('railway_route_event_stream_id');
 
             $table->foreignId('railway_route_id');
 
