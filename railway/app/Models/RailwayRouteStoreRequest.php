@@ -25,7 +25,7 @@ class RailwayRouteStoreRequest extends Model
     ];
 
     protected $casts = [
-        'railway_provider_event_stream_id' => 'integer',
+        'railway_route_event_stream_id' => 'integer',
         'railway_provider_id' => 'integer',
         'valid_from' => 'datetime',
         'name' => 'string',
