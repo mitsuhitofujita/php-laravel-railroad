@@ -16,6 +16,13 @@ use App\Models\RailwayRouteHistoryDetail;
 use App\Models\RailwayRouteStoreRequest;
 use App\Models\RailwayRouteUpdateRequest;
 use App\Models\RailwayRouteEventStream;
+use App\Models\RailwayStation;
+use App\Models\RailwayStationDetail;
+use App\Models\RailwayStationHistory;
+use App\Models\RailwayStationHistoryDetail;
+use App\Models\RailwayStationStoreRequest;
+use App\Models\RailwayStationUpdateRequest;
+use App\Models\RailwayStationEventStream;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -43,5 +50,13 @@ class TruncateSeeder extends Seeder
         RailwayRouteDetail::truncate();
         RailwayRoute::truncate();
         RailwayRouteEventStream::truncate();
+
+        RailwayStationUpdateRequest::truncate();
+        RailwayStationStoreRequest::truncate();
+        RailwayStationHistoryDetail::truncate();
+        RailwayStationHistory::truncate();
+        RailwayStationDetail::truncate();
+        RailwayStation::truncate();
+        RailwayStationEventStream::truncate();
     }
 }
