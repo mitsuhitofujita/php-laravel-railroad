@@ -23,6 +23,7 @@ class RailwayStationUpdateRequest extends Model
         'railway_route_id',
         'valid_from',
         'name',
+        'nickname',
     ];
 
     protected $casts = [

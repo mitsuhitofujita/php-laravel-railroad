@@ -27,6 +27,7 @@ php artisan db:seed --class=TruncateSeeder
 php artisan db:seed --class=LocalSeeder
 
 APP_ENV=testing php artisan test
+APP_ENV=testing php artisan test tests/Feature/Admin/RailwayStation/ControllerCreateTest.php
 
 php artisan serv
 

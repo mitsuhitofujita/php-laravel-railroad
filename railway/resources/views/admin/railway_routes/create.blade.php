@@ -2,8 +2,8 @@
 <div>
     {{ html()->modelForm($initialParams, 'POST', '/admin/railway_routes')->open() }}
         <div>
-            {{ html()->label('適用開始日')->for('railway-providers-create-valid-from') }}
-            {{ html()->text('valid_from')->id('railway-providers-create-valid-from') }}
+            {{ html()->label('適用開始日')->for('railway-routes-create-valid-from') }}
+            {{ html()->text('valid_from')->id('railway-routes-create-valid-from') }}
             @error('valid_from')
                 {{ html()->span($message) }}
             @enderror

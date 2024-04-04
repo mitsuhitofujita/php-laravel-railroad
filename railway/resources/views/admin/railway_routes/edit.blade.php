@@ -2,8 +2,8 @@
 <div>
     {{ html()->modelForm($initialParams, 'PUT', "/admin/railway_routes/${railwayRouteId}")->open() }}
         <div>
-            {{ html()->label('適用開始日')->for('railway-providers-edit-valid-from') }}
-            {{ html()->text('valid_from')->id('railway-providers-edit-valid-from') }}
+            {{ html()->label('適用開始日')->for('railway-routes-edit-valid-from') }}
+            {{ html()->text('valid_from')->id('railway-routes-edit-valid-from') }}
             @error('valid_from')
                 {{ html()->span($message) }}
             @enderror
@@ -16,14 +16,14 @@
             @enderror
         </div>
         <div>
-            {{ html()->label('路線名')->for('railway-providers-edit-name') }}
-            {{ html()->text('name')->id('railway-providers-edit-name') }}
+            {{ html()->label('路線名')->for('railway-routes-edit-name') }}
+            {{ html()->text('name')->id('railway-routes-edit-name') }}
             @error('name')
                 {{ html()->span($message) }}
             @enderror
         </div>
         <div>
-            {{ html()->hidden('token')->id('railway-providers-edit-token') }}
+            {{ html()->hidden('token')->id('railway-routes-edit-token') }}
             @error('token')
                 {{ html()->span($message) }}
             @enderror

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('railway_route_id');
             $table->datetime('valid_from', 6);
             $table->text('name');
-            $table->text('nickname');
+            $table->text('nickname')->nullable();
             $table->datetime('created_at', 6)->useCurrent();
 
             $table->foreign('railway_route_id')->references('id')->on('railway_routes');

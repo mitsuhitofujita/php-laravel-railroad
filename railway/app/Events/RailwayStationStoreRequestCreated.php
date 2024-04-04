@@ -32,7 +32,7 @@ class RailwayStationStoreRequestCreated
 
     public function getRailwayStationEventStreamId(): int
     {
-        return $this->railwayStationStoreRequest['railway_route_event_stream_id'];
+        return $this->railwayStationStoreRequest['railway_station_event_stream_id'];
     }
 
     public function getRailwayRouteId(): int

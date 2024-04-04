@@ -89,7 +89,6 @@ class LocalSeeder extends Seeder
             'railway_provider_detail_id' => $updateRailwayProviderDetail['id'],
         ])->create();
 
-
         return $railwayProvider;
     }
 
@@ -100,8 +99,8 @@ class LocalSeeder extends Seeder
         RailwayRouteStoreRequest::factory()->state([
             'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
             'token' => FormToken::make(),
-            'railway_provider_id' => $railwayProvider['id'],
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
+            'railway_provider_id' => $railwayProvider['id'],
             'name' => '旧路線',
         ])->create();
 
@@ -110,8 +109,8 @@ class LocalSeeder extends Seeder
         ])->create();
 
         $oldRailwayRouteDetail = RailwayRouteDetail::factory()->state([
-            'railway_provider_id' => $railwayProvider['id'],
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
+            'railway_provider_id' => $railwayProvider['id'],
             'name' => '旧路線',
         ])->create();
 
@@ -128,8 +127,8 @@ class LocalSeeder extends Seeder
             'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
             'token' => FormToken::make(),
             'railway_route_id' => $railwayRoute['id'],
-            'railway_provider_id' => $railwayProvider['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
+            'railway_provider_id' => $railwayProvider['id'],
             'name' => '新路線',
         ])->create();
 
@@ -154,8 +153,8 @@ class LocalSeeder extends Seeder
         RailwayStationStoreRequest::factory()->state([
             'railway_station_event_stream_id' => $railwayStationEventStream['id'],
             'token' => FormToken::make(),
-            'railway_route_id' => $railwayRoute['id'],
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
+            'railway_route_id' => $railwayRoute['id'],
             'name' => '旧駅',
             'nickname' => '旧駅愛称',
         ])->create();
@@ -165,8 +164,8 @@ class LocalSeeder extends Seeder
         ])->create();
 
         $oldRailwayStationDetail = RailwayStationDetail::factory()->state([
-            'railway_route_id' => $railwayRoute['id'],
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
+            'railway_route_id' => $railwayRoute['id'],
             'name' => '旧駅',
             'nickname' => '旧駅愛称',
         ])->create();
@@ -184,15 +183,15 @@ class LocalSeeder extends Seeder
             'railway_station_event_stream_id' => $railwayStationEventStream['id'],
             'token' => FormToken::make(),
             'railway_station_id' => $railwayStation['id'],
-            'railway_route_id' => $railwayRoute['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
+            'railway_route_id' => $railwayRoute['id'],
             'name' => '新駅',
             'nickname' => '新駅愛称',
         ])->create();
 
         $newRailwayStationDetail = RailwayStationDetail::factory()->state([
-            'railway_route_id' => $railwayRoute['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
+            'railway_route_id' => $railwayRoute['id'],
             'name' => '新駅',
             'nickname' => '新駅愛称',
         ])->create();
