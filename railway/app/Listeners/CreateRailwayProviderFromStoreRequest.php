@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderDetail;
 use App\Models\RailwayProviderHistory;
@@ -25,7 +25,7 @@ class CreateRailwayProviderFromStoreRequest implements ShouldQueue, ShouldHandle
     {
     }
 
-    public function handle(StoreRailwayProviderRequestCreated $event): void
+    public function handle(RailwayProviderStoreRequestCreated $event): void
     {
         DB::transaction(function () use ($event) {
             $railwayProvider = (new RailwayProvider())

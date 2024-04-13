@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -34,7 +34,7 @@ class StoreRailwayProviderRequest extends Model
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $dispatchesEvents = [
-        'created' => StoreRailwayProviderRequestCreated::class,
+        'created' => RailwayProviderStoreRequestCreated::class,
     ];
 
     public static function existsToken(string $token): bool

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\RailwayProvider;
 
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 use App\Listeners\CreateRailwayProviderFromStoreRequest;
 use App\Models\RailwayProvider;
@@ -29,7 +29,7 @@ class CreateListenerTest extends TestCase
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
             'name' => '鉄道会社',
         ])->create();
-        $event = new StoreRailwayProviderRequestCreated($request);
+        $event = new RailwayProviderStoreRequestCreated($request);
         $listener = new CreateRailwayProviderFromStoreRequest();
         $listener->handle($event);
 

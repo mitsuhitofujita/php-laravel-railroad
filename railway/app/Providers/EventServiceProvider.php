@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Events\RailwayProviderCreated;
 use App\Events\RailwayRouteCreated;
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
 use App\Events\RailwayRouteStoreRequestCreated;
-use App\Events\UpdateRailwayProviderRequestCreated;
+use App\Events\RailwayProviderUpdateRequestCreated;
 use App\Events\RailwayRouteUpdateRequestCreated;
 use App\Listeners\CreateRailwayProviderFromStoreRequest;
 use App\Listeners\CreateRailwayRouteFromRequest;
@@ -15,7 +15,6 @@ use App\Listeners\UpdateRailwayRouteFromRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -28,10 +27,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        StoreRailwayProviderRequestCreated::class => [
+        RailwayProviderStoreRequestCreated::class => [
             CreateRailwayProviderFromStoreRequest::class,
         ],
-        UpdateRailwayProviderRequestCreated::class => [
+        RailwayProviderUpdateRequestCreated::class => [
             CreateRailwayProviderFromUpdateRequest::class,
         ],
         RailwayRouteStoreRequestCreated::class => [

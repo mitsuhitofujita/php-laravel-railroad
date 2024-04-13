@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\UpdateRailwayProviderRequestCreated;
+use App\Events\RailwayProviderUpdateRequestCreated;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderDetail;
 use App\Models\RailwayProviderHistory;
@@ -32,7 +32,7 @@ class CreateRailwayProviderFromUpdateRequest implements ShouldQueue, ShouldHandl
     /**
      * Handle the event.
      */
-    public function handle(UpdateRailwayProviderRequestCreated $event): void
+    public function handle(RailwayProviderUpdateRequestCreated $event): void
     {
         DB::transaction(function () use ($event) {
             $railwayProviderHistory = RailwayProviderHistory::where('railway_provider_id', $event->getRailwayProviderId())

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\StoreRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 use App\Listeners\CreateRailwayProviderFromStoreRequest;
 use App\Models\RailwayProvider;
@@ -74,6 +74,6 @@ class CreateTest extends TestCase
             'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target provider',
         ]);
-        Event::assertDispatched(StoreRailwayProviderRequestCreated::class);
+        Event::assertDispatched(RailwayProviderStoreRequestCreated::class);
     }
 }

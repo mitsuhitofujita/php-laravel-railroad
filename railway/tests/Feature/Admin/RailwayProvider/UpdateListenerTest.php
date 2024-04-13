@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin\RailwayProvider;
 
-use App\Events\StoreRailwayProviderRequestCreated;
-use App\Events\UpdateRailwayProviderRequestCreated;
+use App\Events\RailwayProviderStoreRequestCreated;
+use App\Events\RailwayProviderUpdateRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 
 use App\Listeners\CreateRailwayProviderFromStoreRequest;
@@ -57,7 +57,7 @@ class UpdateListenerTest extends TestCase
             'name' => '更新鉄道会社',
         ])->create();
 
-        $event = new UpdateRailwayProviderRequestCreated($request);
+        $event = new RailwayProviderUpdateRequestCreated($request);
         $listener = new CreateRailwayProviderFromUpdateRequest();
         $listener->handle($event);
 

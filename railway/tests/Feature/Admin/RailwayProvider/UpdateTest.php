@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\UpdateRailwayProviderRequestCreated;
+use App\Events\RailwayProviderUpdateRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 use App\Models\RailwayProviderEventStream;
 use App\Models\RailwayProvider;
@@ -133,6 +133,6 @@ class UpdateTest extends TestCase
             'valid_from' => '2024-01-01 00:00:00.999999',
             'name' => 'target name',
         ]);
-        Event::assertDispatched(UpdateRailwayProviderRequestCreated::class);
+        Event::assertDispatched(RailwayProviderUpdateRequestCreated::class);
     }
 }

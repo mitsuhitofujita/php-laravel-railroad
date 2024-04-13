@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\UpdateRailwayProviderRequestCreated;
+use App\Events\RailwayProviderUpdateRequestCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -36,7 +36,7 @@ class UpdateRailwayProviderRequest extends Model
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $dispatchesEvents = [
-        'created' => UpdateRailwayProviderRequestCreated::class,
+        'created' => RailwayProviderUpdateRequestCreated::class,
     ];
 
     public static function existsToken(string $token): bool
