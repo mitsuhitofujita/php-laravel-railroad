@@ -9,9 +9,9 @@
             @enderror
         </div>
         <div>
-            {{ html()->label('鉄道路線ID')->for('railway-stations-edit-railway-route-id') }}
-            {{ html()->text('railway_route_id')->id('railway-stations-edit-railway-route-id') }}
-            @error('railway_route_id')
+            {{ html()->label('鉄道路線ID')->for('railway-stations-edit-railway-line-id') }}
+            {{ html()->text('railway_line_id')->id('railway-stations-edit-railway-line-id') }}
+            @error('railway_line_id')
                 {{ html()->span($message) }}
             @enderror
         </div>

@@ -5,8 +5,8 @@ namespace Tests\Feature\Admin\RailwayStation;
 use App\Events\RailwayStationStoreRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 use App\Listeners\CreateRailwayStationFromRequest;
-use App\Models\RailwayRoute;
-use App\Models\RailwayRouteEventStream;
+use App\Models\RailwayLine;
+use App\Models\RailwayLineEventStream;
 use App\Models\RailwayStationEventStream;
 use App\Models\RailwayStationStoreRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,16 +19,16 @@ class ListenerCreateTest extends TestCase
 
     public function test_listener(): void
     {
-        $routeEventStream = RailwayRouteEventStream::factory()->create();
-        $route = RailwayRoute::factory()->state([
-            'railway_route_event_stream_id' => $routeEventStream['id'],
+        $routeEventStream = RailwayLineEventStream::factory()->create();
+        $route = RailwayLine::factory()->state([
+            'railway_line_event_stream_id' => $routeEventStream['id'],
         ])->create();
 
         $eventStream = RailwayStationEventStream::factory()->create();
         $request = RailwayStationStoreRequest::factory()->state([
             'railway_station_event_stream_id' => $eventStream['id'],
             'token' => FormToken::make(),
-            'railway_route_id' => $route['id'],
+            'railway_line_id' => $route['id'],
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.999999'),
             'name' => '鉄道駅',
             'nickname' => '鉄道愛称',
@@ -53,7 +53,7 @@ class ListenerCreateTest extends TestCase
 
         $this->assertDatabaseHas('railway_station_details', [
             'valid_from' => '2024-01-01 00:00:00.999999',
-            'railway_route_id' => $route['id'],
+            'railway_line_id' => $route['id'],
             'name' => '鉄道駅',
             'nickname' => '鉄道愛称',
         ]);

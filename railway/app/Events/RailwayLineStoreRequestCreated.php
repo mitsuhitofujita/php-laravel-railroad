@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\RailwayStationStoreRequest;
+use App\Models\RailwayLineStoreRequest;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,15 +12,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 
-class RailwayStationStoreRequestCreated
+class RailwayLineStoreRequestCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public RailwayStationStoreRequest $railwayStationStoreRequest)
+    /**
+     * Create a new event instance.
+     */
+    public function __construct(public RailwayLineStoreRequest $railwayRouteStoreRequest)
     {
     }
 
     /**
+     * Get the channels the event should broadcast on.
+     *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
@@ -30,28 +35,23 @@ class RailwayStationStoreRequestCreated
         ];
     }
 
-    public function getRailwayStationEventStreamId(): int
+    public function getRailwayLineEventStreamId(): int
     {
-        return $this->railwayStationStoreRequest['railway_station_event_stream_id'];
+        return $this->railwayRouteStoreRequest['railway_line_event_stream_id'];
     }
 
-    public function getRailwayLineId(): int
+    public function getRailwayProviderId(): int
     {
-        return $this->railwayStationStoreRequest['railway_line_id'];
+        return $this->railwayRouteStoreRequest['railway_provider_id'];
     }
 
     public function getValidFrom(): Carbon
     {
-        return $this->railwayStationStoreRequest['valid_from'];
+        return $this->railwayRouteStoreRequest['valid_from'];
     }
 
     public function getName(): string
     {
-        return $this->railwayStationStoreRequest['name'];
-    }
-
-    public function getNickname(): string
-    {
-        return $this->railwayStationStoreRequest['nickname'];
+        return $this->railwayRouteStoreRequest['name'];
     }
 }

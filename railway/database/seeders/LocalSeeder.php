@@ -10,13 +10,13 @@ use App\Models\RailwayProviderHistoryDetail;
 use App\Models\RailwayProviderEventStream;
 use App\Models\StoreRailwayProviderRequest;
 use App\Models\UpdateRailwayProviderRequest;
-use App\Models\RailwayRoute;
-use App\Models\RailwayRouteDetail;
-use App\Models\RailwayRouteEventStream;
-use App\Models\RailwayRouteHistory;
-use App\Models\RailwayRouteHistoryDetail;
-use App\Models\RailwayRouteStoreRequest;
-use App\Models\RailwayRouteUpdateRequest;
+use App\Models\RailwayLine;
+use App\Models\RailwayLineDetail;
+use App\Models\RailwayLineEventStream;
+use App\Models\RailwayLineHistory;
+use App\Models\RailwayLineHistoryDetail;
+use App\Models\RailwayLineStoreRequest;
+use App\Models\RailwayLineUpdateRequest;
 use App\Models\RailwayStation;
 use App\Models\RailwayStationDetail;
 use App\Models\RailwayStationEventStream;
@@ -38,7 +38,7 @@ class LocalSeeder extends Seeder
     public function run(): void
     {
         $railwayProvider = $this->createRailwayProviderSeed();
-        $railwayRoute = $this->createRailwayRouteSeed($railwayProvider);
+        $railwayRoute = $this->createRailwayLineSeed($railwayProvider);
         $railwayStation = $this->createRailwayStationSeed($railwayRoute);
     }
 
@@ -92,61 +92,61 @@ class LocalSeeder extends Seeder
         return $railwayProvider;
     }
 
-    private function createRailwayRouteSeed(RailwayProvider $railwayProvider): RailwayRoute
+    private function createRailwayLineSeed(RailwayProvider $railwayProvider): RailwayLine
     {
-        $railwayRouteEventStream = RailwayRouteEventStream::factory()->create();
+        $railwayRouteEventStream = RailwayLineEventStream::factory()->create();
 
-        RailwayRouteStoreRequest::factory()->state([
-            'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
+        RailwayLineStoreRequest::factory()->state([
+            'railway_line_event_stream_id' => $railwayRouteEventStream['id'],
             'token' => FormToken::make(),
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
             'railway_provider_id' => $railwayProvider['id'],
             'name' => '旧路線',
         ])->create();
 
-        $railwayRoute = RailwayRoute::factory()->state([
-            'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
+        $railwayRoute = RailwayLine::factory()->state([
+            'railway_line_event_stream_id' => $railwayRouteEventStream['id'],
         ])->create();
 
-        $oldRailwayRouteDetail = RailwayRouteDetail::factory()->state([
+        $oldRailwayLineDetail = RailwayLineDetail::factory()->state([
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
             'railway_provider_id' => $railwayProvider['id'],
             'name' => '旧路線',
         ])->create();
 
-        $railwayRouteHistory = RailwayRouteHistory::factory()->state([
-            'railway_route_id' => $railwayRoute['id'],
+        $railwayRouteHistory = RailwayLineHistory::factory()->state([
+            'railway_line_id' => $railwayRoute['id'],
         ])->create();
 
-        RailwayRouteHistoryDetail::factory()->state([
-            'railway_route_history_id' => $railwayRouteHistory['id'],
-            'railway_route_detail_id' => $oldRailwayRouteDetail['id'],
+        RailwayLineHistoryDetail::factory()->state([
+            'railway_line_history_id' => $railwayRouteHistory['id'],
+            'railway_line_detail_id' => $oldRailwayLineDetail['id'],
         ])->create();
 
-        RailwayRouteUpdateRequest::factory()->state([
-            'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
+        RailwayLineUpdateRequest::factory()->state([
+            'railway_line_event_stream_id' => $railwayRouteEventStream['id'],
             'token' => FormToken::make(),
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
             'railway_provider_id' => $railwayProvider['id'],
             'name' => '新路線',
         ])->create();
 
-        $newRailwayRouteDetail = RailwayRouteDetail::factory()->state([
+        $newRailwayLineDetail = RailwayLineDetail::factory()->state([
             'railway_provider_id' => $railwayProvider['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
             'name' => '新路線',
         ])->create();
 
-        RailwayRouteHistoryDetail::factory()->state([
-            'railway_route_history_id' => $railwayRouteHistory['id'],
-            'railway_route_detail_id' => $newRailwayRouteDetail['id'],
+        RailwayLineHistoryDetail::factory()->state([
+            'railway_line_history_id' => $railwayRouteHistory['id'],
+            'railway_line_detail_id' => $newRailwayLineDetail['id'],
         ])->create();
 
         return $railwayRoute;
     }
 
-    private function createRailwayStationSeed(RailwayRoute $railwayRoute): RailwayStation
+    private function createRailwayStationSeed(RailwayLine $railwayRoute): RailwayStation
     {
         $railwayStationEventStream = RailwayStationEventStream::factory()->create();
 
@@ -154,7 +154,7 @@ class LocalSeeder extends Seeder
             'railway_station_event_stream_id' => $railwayStationEventStream['id'],
             'token' => FormToken::make(),
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => '旧駅',
             'nickname' => '旧駅愛称',
         ])->create();
@@ -165,7 +165,7 @@ class LocalSeeder extends Seeder
 
         $oldRailwayStationDetail = RailwayStationDetail::factory()->state([
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => '旧駅',
             'nickname' => '旧駅愛称',
         ])->create();
@@ -184,14 +184,14 @@ class LocalSeeder extends Seeder
             'token' => FormToken::make(),
             'railway_station_id' => $railwayStation['id'],
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => '新駅',
             'nickname' => '新駅愛称',
         ])->create();
 
         $newRailwayStationDetail = RailwayStationDetail::factory()->state([
             'valid_from' => Carbon::parse('2024-03-01 00:00:00.000000'),
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => '新駅',
             'nickname' => '新駅愛称',
         ])->create();

@@ -35,9 +35,9 @@ class RailwayStationUpdateRequestCreated
         return $this->railwayStationUpdateRequest['railway_station_id'];
     }
 
-    public function getRailwayRouteId(): int
+    public function getRailwayLineId(): int
     {
-        return $this->railwayStationUpdateRequest['railway_route_id'];
+        return $this->railwayStationUpdateRequest['railway_line_id'];
     }
 
     public function getValidFrom(): Carbon

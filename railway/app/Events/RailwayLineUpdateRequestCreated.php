@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\RailwayStationStoreRequest;
+use App\Models\RailwayLineUpdateRequest;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,15 +12,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 
-class RailwayStationStoreRequestCreated
+class RailwayLineUpdateRequestCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public RailwayStationStoreRequest $railwayStationStoreRequest)
+    /**
+     * Create a new event instance.
+     */
+    public function __construct(public RailwayLineUpdateRequest $railwayRouteUpdateRequest)
     {
     }
 
     /**
+     * Get the channels the event should broadcast on.
+     *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
@@ -30,28 +35,23 @@ class RailwayStationStoreRequestCreated
         ];
     }
 
-    public function getRailwayStationEventStreamId(): int
-    {
-        return $this->railwayStationStoreRequest['railway_station_event_stream_id'];
-    }
-
     public function getRailwayLineId(): int
     {
-        return $this->railwayStationStoreRequest['railway_line_id'];
+        return $this->railwayRouteUpdateRequest['railway_line_id'];
+    }
+
+    public function getRailwayProviderId(): int
+    {
+        return $this->railwayRouteUpdateRequest['railway_provider_id'];
     }
 
     public function getValidFrom(): Carbon
     {
-        return $this->railwayStationStoreRequest['valid_from'];
+        return $this->railwayRouteUpdateRequest['valid_from'];
     }
 
     public function getName(): string
     {
-        return $this->railwayStationStoreRequest['name'];
-    }
-
-    public function getNickname(): string
-    {
-        return $this->railwayStationStoreRequest['nickname'];
+        return $this->railwayRouteUpdateRequest['name'];
     }
 }

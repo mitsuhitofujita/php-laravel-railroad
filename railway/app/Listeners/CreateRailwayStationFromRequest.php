@@ -35,7 +35,7 @@ class CreateRailwayStationFromRequest implements ShouldQueue, ShouldHandleEvents
 
             $railwayStationDetail = (new RailwayStationDetail())->fill([
                 'valid_from' => $event->getValidFrom(),
-                'railway_route_id' => $event->getRailwayRouteId(),
+                'railway_line_id' => $event->getRailwayLineId(),
                 'name' => $event->getName(),
                 'nickname' => $event->getNickname(),
             ]);

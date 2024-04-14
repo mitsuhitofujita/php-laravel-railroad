@@ -10,7 +10,7 @@ use App\Http\Requests\RailwayStationUpdateRequest as UpdateRequest;
 use App\Models\RailwayStationEventStream as EventStream;
 use App\Models\RailwayStationStoreRequest as StoreModel;
 use App\Models\RailwayStationUpdateRequest as UpdateModel;
-use App\Models\RailwayRoute;
+use App\Models\RailwayLine;
 use App\Models\RailwayStation;
 use App\Models\RailwayStationDetail;
 use App\Models\RailwayStationHistory;
@@ -40,10 +40,10 @@ class RailwayStationController extends Controller
             ]);
         }
 
-        $railwayRoute = RailwayRoute::find($request->input('railway_route_id'));
+        $railwayRoute = RailwayLine::find($request->input('railway_line_id'));
         if ($railwayRoute === null) {
             throw ValidationException::withMessages([
-                'railway_route_id' => ['不正な路線会社IDです。'],
+                'railway_line_id' => ['不正な路線会社IDです。'],
             ]);
         }
 
@@ -79,7 +79,7 @@ class RailwayStationController extends Controller
             'initialParams' => [
                 'token' => FormToken::make(),
                 'valid_from' => $railwayStationDetail['valid_from'],
-                'railway_route_id' => $railwayStationDetail['railway_route_id'],
+                'railway_line_id' => $railwayStationDetail['railway_line_id'],
                 'name' => $railwayStationDetail['name'],
                 'nickname' => $railwayStationDetail['nickname'],
             ]
@@ -94,7 +94,7 @@ class RailwayStationController extends Controller
             ]);
         }
 
-        $railwayRoute = RailwayRoute::find($request->input('railway_route_id'));
+        $railwayRoute = RailwayLine::find($request->input('railway_line_id'));
         if ($railwayRoute === null) {
             throw ValidationException::withMessages([
                 'railwayRouteId' => ['不正な鉄道路線IDです。'],

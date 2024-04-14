@@ -19,7 +19,7 @@ class RailwayStationStoreRequest extends Model
     protected $fillable = [
         'token',
         'railway_station_event_stream_id',
-        'railway_route_id',
+        'railway_line_id',
         'valid_from',
         'name',
         'nickname',
@@ -27,7 +27,7 @@ class RailwayStationStoreRequest extends Model
 
     protected $casts = [
         'railway_station_event_stream_id' => 'integer',
-        'railway_route_id' => 'integer',
+        'railway_line_id' => 'integer',
         'valid_from' => 'datetime',
         'name' => 'string',
         'nickname' => 'string',

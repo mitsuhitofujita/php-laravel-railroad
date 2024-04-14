@@ -6,12 +6,12 @@ use App\Events\RailwayStationStoreRequestCreated;
 use App\Http\Controllers\Helpers\FormToken;
 use App\Models\RailwayProvider;
 use App\Models\RailwayProviderEventStream;
-use App\Models\RailwayRoute;
-use App\Models\RailwayRouteDetail;
-use App\Models\RailwayRouteEventStream;
+use App\Models\RailwayLine;
+use App\Models\RailwayLineDetail;
+use App\Models\RailwayLineEventStream;
 use App\Models\RailwayStationEventStream;
 use App\Models\RailwayStationStoreRequest;
-use App\Models\StoreRailwayRouteRequest;
+use App\Models\StoreRailwayLineRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
@@ -31,17 +31,17 @@ class ControllerCreateTest extends TestCase
     {
         Event::fake();
 
-        $railwayRouteEventStream = RailwayRouteEventStream::factory()
+        $railwayRouteEventStream = RailwayLineEventStream::factory()
             ->create();
 
-        $railwayRoute = RailwayRoute::factory()->state([
-            'railway_route_event_stream_id' => $railwayRouteEventStream['id'],
+        $railwayRoute = RailwayLine::factory()->state([
+            'railway_line_event_stream_id' => $railwayRouteEventStream['id'],
         ])->create();
 
         $response = $this->post('/admin/railway_stations', [
             'token' => 'target token',
             'valid_from' => '2024-01-01 00:00:00.999999',
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => 'target station',
             'nickname' => 'target nickname',
         ]);
@@ -50,7 +50,7 @@ class ControllerCreateTest extends TestCase
         $this->assertDatabaseHas('railway_station_store_requests', [
             'token' => 'target token',
             'valid_from' => '2024-01-01 00:00:00.999999',
-            'railway_route_id' => $railwayRoute['id'],
+            'railway_line_id' => $railwayRoute['id'],
             'name' => 'target station',
             'nickname' => 'target nickname',
         ]);

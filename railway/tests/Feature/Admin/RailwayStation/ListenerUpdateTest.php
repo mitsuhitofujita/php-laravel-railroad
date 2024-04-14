@@ -8,8 +8,8 @@ use App\Http\Controllers\Helpers\FormToken;
 
 use App\Listeners\CreateRailwayStationFromRequest;
 use App\Listeners\UpdateRailwayStationFromRequest;
-use App\Models\RailwayRoute;
-use App\Models\RailwayRouteEventStream;
+use App\Models\RailwayLine;
+use App\Models\RailwayLineEventStream;
 use App\Models\RailwayStation;
 use App\Models\RailwayStationDetail;
 use App\Models\RailwayStationEventStream;
@@ -31,10 +31,10 @@ class ListenerUpdateTest extends TestCase
 
     public function test_can_update_detail_to_history_from_update_request(): void
     {
-        $routeEventStream = RailwayRouteEventStream::factory()->create();
+        $routeEventStream = RailwayLineEventStream::factory()->create();
 
-        $route = RailwayRoute::factory()->state([
-            'railway_route_event_stream_id' => $routeEventStream['id'],
+        $route = RailwayLine::factory()->state([
+            'railway_line_event_stream_id' => $routeEventStream['id'],
         ])->create();
 
         $eventStream = RailwayStationEventStream::factory()->create();
@@ -45,7 +45,7 @@ class ListenerUpdateTest extends TestCase
 
         $stationDetail = RailwayStationDetail::factory()->state([
             'valid_from' => Carbon::parse('2024-01-01 00:00:00.000000'),
-            'railway_route_id' => $route['id'],
+            'railway_line_id' => $route['id'],
             'name' => '旧鉄道駅',
         ])->create();
 
@@ -63,7 +63,7 @@ class ListenerUpdateTest extends TestCase
             'token' => FormToken::make(),
             'railway_station_id' => $station['id'],
             'valid_from' => Carbon::parse('2024-03-02 00:00:00.999999'),
-            'railway_route_id' => $route['id'],
+            'railway_line_id' => $route['id'],
             'name' => '更新鉄道駅',
             'nickname' => '更新鉄道愛称',
         ])->create();
@@ -86,7 +86,7 @@ class ListenerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('railway_station_details', [
             'valid_from' => '2024-03-02 00:00:00.999999',
-            'railway_route_id' => $request['railway_route_id'],
+            'railway_line_id' => $request['railway_line_id'],
             'name' => '更新鉄道駅',
             'nickname' => '更新鉄道愛称',
         ]);
